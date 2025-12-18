@@ -8,129 +8,225 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
-            background-color: #fffaf0; /* 極淺橘色背景 */
+            background-color: #f0f4f0; /* 極淺綠色背景 */
+            overflow-x: hidden;
         }
-        .orange-gradient {
-            background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+        .green-border {
+            border-color: #166534;
         }
-        .step-card {
-            transition: transform 0.3s ease;
+        .step-number {
+            background-color: #166534; /* 深綠色 */
         }
-        .step-card:hover {
-            transform: translateY(-5px);
+        /* 自定義平滑動畫 */
+        .hover-float {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* 圖片容器：固定寬度填滿，僅高度會變動 */
+        #hero-wrapper {
+            width: 100%;
+            overflow: hidden;
+            background-color: #000;
+            height: 500px; /* 初始高度 */
+            transition: height 0.1s ease-out;
+            position: relative;
+        }
+        #hero-image {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            object-position: center top; /* 縮小時固定頂部內容 */
+            filter: brightness(0.8); /* 稍微調暗以便文字突顯 */
+        }
+        /* 圖片上的主文字標題 (置中) */
+        .hero-text {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 3rem;
+            font-weight: 900;
+            text-shadow: 2px 2px 15px rgba(0,0,0,0.7);
+            white-space: nowrap;
+            letter-spacing: 0.5rem;
+            background: rgba(0,0,0,0.2);
+            padding: 1rem 3rem;
+            border: 2px solid white;
+            pointer-events: none;
+        }
+        /* 圖片下方的白色提示字體 */
+        .hero-footer-text {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            color: white;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            padding: 20px 10px;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
+            pointer-events: none;
         }
     </style>
 </head>
-<body class="text-gray-800">
+<body class="text-gray-800 antialiased">
 
-    <!-- 導覽列 -->
-    <nav class="sticky top-0 z-50 bg-white shadow-md">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <div class="w-10 h-10 orange-gradient rounded-lg flex items-center justify-center text-white">
-                    <i class="fas fa-wallet fa-lg"></i>
-                </div>
-                <span class="text-xl font-bold text-orange-600">班級記帳機器人</span>
-            </div>
-            <div class="hidden md:flex space-x-6 text-sm font-medium">
-                <a href="#intro" class="hover:text-orange-500">首頁</a>
-                <a href="#manual" class="hover:text-orange-500">操作手冊</a>
-                <a href="https://line.me" target="_blank" class="bg-orange-500 text-white px-4 py-2 rounded-full hover:bg-orange-600 transition">加入 LINE 機器人</a>
+    <!-- 頂部簡單標題列 -->
+    <nav class="bg-white border-b-2 border-green-700 sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <!-- 鈔票圖標 -->
+                <i class="fas fa-money-bill-1 text-green-700 text-2xl"></i>
+                <h1 class="text-2xl font-bold text-gray-800">班級記帳機器人 <span class="text-green-700 text-lg font-medium">| LINE bot使用教學</span></h1>
             </div>
         </div>
     </nav>
 
-    <!-- 英雄區 (Hero Section) -->
-    <header id="intro" class="orange-gradient text-white py-16 px-4">
-        <div class="max-w-4xl mx-auto text-center">
-            <h1 class="text-4xl md:text-5xl font-extrabold mb-6">輕鬆打理班級收支</h1>
-            <p class="text-lg md:text-xl opacity-90 mb-10">
-                專為學生與老師設計的 LINE 記帳助手，讓每一筆開銷都清清楚楚。
+    <!-- 主視覺圖片區塊 -->
+    <div id="hero-wrapper">
+        <img id="hero-image" src="https://images.unsplash.com/photo-1554224155-1696413565d3?q=80&w=1200&auto=format&fit=crop" 
+             alt="班級記帳機器人主視覺" 
+             onerror="this.src='https://via.placeholder.com/1200x500?text=[請更換為您的長方形機器人主圖]'">
+        
+        <!-- 置中大標題 -->
+        <div class="hero-text">操作手冊</div>
+
+        <!-- 圖片內下方的白色說明文字 -->
+        <div class="hero-footer-text">
+            有任何問題，請點選選單<span class="font-bold underline mx-1">「問題回報」</span>，收到回饋後，會盡快處理，謝謝大家的包容。
+        </div>
+    </div>
+
+    <!-- 操作手冊主要內容 -->
+    <main class="max-w-5xl mx-auto px-6 py-12">
+        
+        <!-- 說明文字 - 深色背景 -->
+        <div class="mb-12 bg-green-700 border-l-8 border-green-900 p-8 rounded-r-xl shadow-md">
+            <p class="text-xl text-white leading-relaxed font-bold mb-2">
+                歡迎使用「班級記帳機器人」！以下為記帳教學ㄛ~還不快加入嗎?
             </p>
-            <div class="bg-white p-2 rounded-3xl shadow-2xl inline-block">
-                <!-- 主要展示圖片 -->
-                <img src="https://images.unsplash.com/photo-1554224155-1696413565d3?q=80&w=1000&auto=format&fit=crop" 
-                     alt="機器人操作示意圖" 
-                     onerror="this.src='https://via.placeholder.com/800x450?text=機器人介面截圖'"
-                     class="rounded-2xl max-w-full h-auto md:w-[600px]">
-            </div>
-        </div>
-    </header>
-
-    <!-- 操作手冊內容 -->
-    <main id="manual" class="max-w-6xl mx-auto px-4 py-20">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl font-bold text-gray-900 mb-4">使用教學</h2>
-            <div class="w-20 h-1 bg-orange-500 mx-auto rounded-full"></div>
-            <p class="mt-4 text-gray-600">簡單六步驟，快速上手記帳功能</p>
+            <p class="text-green-100">LINE聊天室有六個選單，請一步步一起學習如何使用「班級記帳機器人」吧!</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- 七大步驟 -->
+        <div class="space-y-8">
             
-            <!-- 第一點 -->
-            <div class="step-card bg-white p-6 rounded-2xl shadow-sm border border-orange-100">
-                <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center font-bold text-xl mb-4">1</div>
-                <img src="https://via.placeholder.com/300x200?text=加入好友" class="w-full h-40 object-cover rounded-xl mb-4" alt="步驟1圖示">
-                <h3 class="text-xl font-bold mb-2">加入機器人好友</h3>
-                <p class="text-gray-600">點擊連結或掃描 QR Code，將「班級記帳機器人」加入您的 LINE 好友清單。</p>
-            </div>
+            <!-- 步驟 1 -->
+            <section class="hover-float flex flex-col md:flex-row items-center gap-8 bg-white p-8 rounded-2xl shadow-sm border border-green-100 hover:-translate-y-2 hover:shadow-xl hover:border-green-300">
+                <div class="md:w-1/2">
+                    <div class="inline-block step-number text-white px-4 py-1 rounded-full text-sm font-bold mb-4">STEP 01</div>
+                    <h2 class="text-2xl font-bold mb-4 text-gray-900">註冊</h2>
+                    <p class="text-gray-600 leading-relaxed mb-4">為了讓機器人認識你，請於聊天室輸入「我是[你的名字]」。</p>
+                </div>
+                <div class="md:w-1/2 w-full">
+                    <img src="https://via.placeholder.com/600x400?text=[註冊畫面圖片]" alt="操作步驟1" class="rounded-xl shadow-md w-full object-cover border border-gray-100">
+                </div>
+            </section>
 
-            <!-- 第二點 -->
-            <div class="step-card bg-white p-6 rounded-2xl shadow-sm border border-orange-100">
-                <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center font-bold text-xl mb-4">2</div>
-                <img src="https://via.placeholder.com/300x200?text=建立班級" class="w-full h-40 object-cover rounded-xl mb-4" alt="步驟2圖示">
-                <h3 class="text-xl font-bold mb-2">初始化班級資訊</h3>
-                <p class="text-gray-600">輸入指令「建立班級」，並設定班級名稱與預設幣別，開啟您的記帳簿。</p>
-            </div>
+            <!-- 步驟 2 -->
+            <section class="hover-float flex flex-col md:flex-row-reverse items-center gap-8 bg-white p-8 rounded-2xl shadow-sm border border-green-100 hover:-translate-y-2 hover:shadow-xl hover:border-green-300">
+                <div class="md:w-1/2">
+                    <div class="inline-block step-number text-white px-4 py-1 rounded-full text-sm font-bold mb-4">STEP 02</div>
+                    <h2 class="text-2xl font-bold mb-4 text-gray-900">查ID</h2>
+                    <p class="text-gray-600 leading-relaxed mb-4">為了確保記帳的資料不會被其他人改動，每位負責人都有自己的密碼，僅有已登入的人才有記帳、催債、刪除帳目的權限，請記住LINE機器人回復的密碼(五位數)!</p>
+                </div>
+                <div class="md:w-1/2 w-full">
+                    <img src="https://via.placeholder.com/600x400?text=[查ID畫面圖片]" alt="操作步驟2" class="rounded-xl shadow-md w-full object-cover border border-gray-100">
+                </div>
+            </section>
 
-            <!-- 第三點 -->
-            <div class="step-card bg-white p-6 rounded-2xl shadow-sm border border-orange-100">
-                <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center font-bold text-xl mb-4">3</div>
-                <img src="https://via.placeholder.com/300x200?text=新增開支" class="w-full h-40 object-cover rounded-xl mb-4" alt="步驟3圖示">
-                <h3 class="text-xl font-bold mb-2">快速紀錄開支</h3>
-                <p class="text-gray-600">直接輸入「金額 項目」，例如「500 文具費」，機器人會自動分類並儲存。</p>
-            </div>
+            <!-- 步驟 3 -->
+            <section class="hover-float flex flex-col md:flex-row items-center gap-8 bg-white p-8 rounded-2xl shadow-sm border border-green-100 hover:-translate-y-2 hover:shadow-xl hover:border-green-300">
+                <div class="md:w-1/2">
+                    <div class="inline-block step-number text-white px-4 py-1 rounded-full text-sm font-bold mb-4">STEP 03</div>
+                    <h2 class="text-2xl font-bold mb-4 text-gray-900">登入管理後臺</h2>
+                    <p class="text-gray-600 leading-relaxed mb-4">點選「班級記帳管理後臺」選單，進入後臺網站，請按下網站右上角的「鑰匙」，選擇名字和輸入密碼，就可以登入負責人。</p>
+                </div>
+                <div class="md:w-1/2 w-full">
+                    <img src="https://via.placeholder.com/600x400?text=[登入畫面圖片]" alt="操作步驟3" class="rounded-xl shadow-md w-full object-cover border border-gray-100">
+                </div>
+            </section>
 
-            <!-- 第四點 -->
-            <div class="step-card bg-white p-6 rounded-2xl shadow-sm border border-orange-100">
-                <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center font-bold text-xl mb-4">4</div>
-                <img src="https://via.placeholder.com/300x200?text=查詢餘額" class="w-full h-40 object-cover rounded-xl mb-4" alt="步驟4圖示">
-                <h3 class="text-xl font-bold mb-2">查詢班費餘額</h3>
-                <p class="text-gray-600">輸入「餘額」或點擊選單，即時查看目前班級剩餘的經費總額。</p>
-            </div>
+            <!-- 步驟 4 -->
+            <section class="hover-float flex flex-col md:flex-row-reverse items-center gap-8 bg-white p-8 rounded-2xl shadow-sm border border-green-100 hover:-translate-y-2 hover:shadow-xl hover:border-green-300">
+                <div class="md:w-1/2">
+                    <div class="inline-block step-number text-white px-4 py-1 rounded-full text-sm font-bold mb-4">STEP 04</div>
+                    <h2 class="text-2xl font-bold mb-4 text-gray-900">記帳</h2>
+                    <p class="text-gray-600 leading-relaxed mb-4">按下右上角的「+號」，即可開始記帳。記帳分為兩種，一般公費為輸入一個總金額，系統自動為勾選中的所有人建立帳目；指定費用則可以為每位同學輸入不同金額。</p>
+                </div>
+                <div class="md:w-1/2 w-full">
+                    <img src="https://via.placeholder.com/600x400?text=[記帳操作圖片]" alt="操作步驟4" class="rounded-xl shadow-md w-full object-cover border border-gray-100">
+                </div>
+            </section>
 
-            <!-- 第五點 -->
-            <div class="step-card bg-white p-6 rounded-2xl shadow-sm border border-orange-100">
-                <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center font-bold text-xl mb-4">5</div>
-                <img src="https://via.placeholder.com/300x200?text=導出報表" class="w-full h-40 object-cover rounded-xl mb-4" alt="步驟5圖示">
-                <h3 class="text-xl font-bold mb-2">導出每月報表</h3>
-                <p class="text-gray-600">輸入「報表」，機器人會生成當月的明細表單，方便公開透明對帳。</p>
-            </div>
+            <!-- 步驟 5 -->
+            <section class="hover-float flex flex-col md:flex-row items-center gap-8 bg-white p-8 rounded-2xl shadow-sm border border-green-100 hover:-translate-y-2 hover:shadow-xl hover:border-green-300">
+                <div class="md:w-1/2">
+                    <div class="inline-block step-number text-white px-4 py-1 rounded-full text-sm font-bold mb-4">STEP 05</div>
+                    <h2 class="text-2xl font-bold mb-4 text-gray-900">查看繳費紀錄</h2>
+                    <p class="text-gray-600 leading-relaxed mb-4">每項帳目都會標示帳目名稱、負責人名字、收錢進度、應收實收未收的金額等等，點選項目後，會出現更多細項。</p>
+                </div>
+                <div class="md:w-1/2 w-full">
+                    <img src="https://via.placeholder.com/600x400?text=[繳費紀錄畫面圖片]" alt="操作步驟5" class="rounded-xl shadow-md w-full object-cover border border-gray-100">
+                </div>
+            </section>
 
-            <!-- 第六點 -->
-            <div class="step-card bg-white p-6 rounded-2xl shadow-sm border border-orange-100">
-                <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center font-bold text-xl mb-4">6</div>
-                <img src="https://via.placeholder.com/300x200?text=權限管理" class="w-full h-40 object-cover rounded-xl mb-4" alt="步驟6圖示">
-                <h3 class="text-xl font-bold mb-2">設定管理員權限</h3>
-                <p class="text-gray-600">透過「設定」功能，可以增加多位股長共同管理帳目，提高協作效率。</p>
-            </div>
+            <!-- 步驟 6 -->
+            <section class="hover-float flex flex-col md:flex-row-reverse items-center gap-8 bg-white p-8 rounded-2xl shadow-sm border border-green-100 hover:-translate-y-2 hover:shadow-xl hover:border-green-300">
+                <div class="md:w-1/2">
+                    <div class="inline-block step-number text-white px-4 py-1 rounded-full text-sm font-bold mb-4">STEP 06</div>
+                    <h2 class="text-2xl font-bold mb-4 text-gray-900">負責人權限</h2>
+                    <p class="text-gray-600 leading-relaxed mb-4">帳目負責人有三樣獨有權限：1. 一鍵催帳功能：機器人會向未繳費的人發送提醒通知。2. 刪除帳目。3. 修改繳費名單。當所有人都繳完後，觸發結案詢問，並從Google sheet中刪除此項目。</p>
+                </div>
+                <div class="md:w-1/2 w-full">
+                    <img src="https://via.placeholder.com/600x400?text=[權限功能圖片]" alt="操作步驟6" class="rounded-xl shadow-md w-full object-cover border border-gray-100">
+                </div>
+            </section>
+
+            <!-- 步驟 7 -->
+            <section class="hover-float flex flex-col md:flex-row items-center gap-8 bg-white p-8 rounded-2xl shadow-sm border border-green-100 hover:-translate-y-2 hover:shadow-xl hover:border-green-300">
+                <div class="md:w-1/2">
+                    <div class="inline-block step-number text-white px-4 py-1 rounded-full text-sm font-bold mb-4">STEP 07</div>
+                    <h2 class="text-2xl font-bold mb-4 text-gray-900">查個帳</h2>
+                    <p class="text-gray-600 leading-relaxed mb-4">機器人會自動統計目前所有的待繳帳目，並回覆各項及最終的總金額，方便您一次清點應繳費用。</p>
+                </div>
+                <div class="md:w-1/2 w-full">
+                    <img src="https://via.placeholder.com/600x400?text=[個人查帳畫面圖片]" alt="操作步驟7" class="rounded-xl shadow-md w-full object-cover border border-gray-100">
+                </div>
+            </section>
 
         </div>
     </main>
 
     <!-- 頁尾 -->
-    <footer class="bg-gray-100 py-12 px-4 border-t border-gray-200 text-center">
-        <p class="text-gray-500 text-sm mb-4">&copy; 2024 班級記帳機器人. All rights reserved.</p>
-        <div class="flex justify-center space-x-4">
-            <a href="#" class="text-orange-500 hover:text-orange-600"><i class="fab fa-line fa-2x"></i></a>
-            <a href="#" class="text-gray-400 hover:text-gray-600"><i class="fas fa-question-circle fa-2x"></i></a>
+    <footer class="bg-white border-t border-gray-200 py-10 mt-12">
+        <div class="max-w-5xl mx-auto px-6 text-center text-gray-500">
+            <p class="mb-2">&copy; 班級記帳機器人 操作手冊</p>
         </div>
     </footer>
 
     <!-- 回到頂端按鈕 -->
-    <a href="#intro" class="fixed bottom-6 right-6 bg-orange-600 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-orange-700 transition">
-        <i class="fas fa-arrow-up"></i>
-    </a>
+    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-8 right-8 bg-green-700 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-green-800 transition">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // 滾動縮小圖片高度效果
+        window.addEventListener('scroll', function() {
+            const scrollY = window.scrollY;
+            const heroWrapper = document.getElementById('hero-wrapper');
+            
+            // 初始高度 500px，隨著滾動最小縮到 250px
+            let newHeight = 500 - (scrollY / 2); 
+            if (newHeight < 250) newHeight = 250;
+            if (newHeight > 500) newHeight = 500;
+            
+            heroWrapper.style.height = newHeight + 'px';
+        });
+    </script>
 
 </body>
 </html>
